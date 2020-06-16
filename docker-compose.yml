@@ -1,0 +1,31 @@
+---
+version: '3.3'
+
+networks:
+
+  default:
+    external:
+      name: localstack-network
+
+volumes:
+
+  localstack:
+
+services:
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - 8080:8080
+      - 4566:4566
+    environment:
+      - DATA_DIR=/tmp/localstack/data
+      - DEBUG=1
+      - DEFAULT_REGION=us-west-1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LAMBDA_EXECUTOR=docker-reuse
+      - PORT_WEB_UI=8080
+      - SERVICES=serverless,ssm
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - localstack:/tmp/localstack/data
