@@ -812,6 +812,21 @@ aws-sdk@^2.402.0:
     uuid "3.3.2"
     xml2js "0.4.19"
 
+aws-sdk@^2.490.0:
+  version "2.699.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.699.0.tgz#e77b6ffa4c860882e2779c060b74fab33d42f554"
+  integrity sha512-EC431z/+i/cJgOgnDpOJ8Fa6+p7Oo1vIvdm/uJqP9tJX3+pxi/M/tvQavfz4yAlLBFqjQwxa8nrPisby0Mr5MQ==
+  dependencies:
+    buffer "4.9.2"
+    events "1.1.1"
+    ieee754 "1.1.13"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.2.1"
+    url "0.10.3"
+    uuid "3.3.2"
+    xml2js "0.4.19"
+
 axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
@@ -3739,6 +3754,14 @@ serialize-javascript@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-2.1.2.tgz#ecec53b0e0317bdc95ef76ab7074b7384785fa61"
   integrity sha512-rs9OggEUF0V4jUSecXazOYsLfu7OGK2qIn3c7IPBiffz32XniEp/TX9Xmc9LQfK2nQ2QKHvZ2oygKUGU0lG4jQ==
+
+serverless-domain-manager@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/serverless-domain-manager/-/serverless-domain-manager-4.1.1.tgz#3ce3119cfa6fd46a70578f5f1a6bbf0189f04b7b"
+  integrity sha512-9cQC+aj7FD82ca7SC1fWLKZzyDyRufj+ez0SC89VeNQ43UfugstSSCqbJ6nOWSgSeLQdEKZzukY61vcOF957LA==
+  dependencies:
+    aws-sdk "^2.490.0"
+    chalk "^2.4.1"
 
 serverless-localstack@^0.4.24:
   version "0.4.24"

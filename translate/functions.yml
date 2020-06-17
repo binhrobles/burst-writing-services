@@ -1,0 +1,10 @@
+---
+translate:
+  handler: translate/handler.translate
+  memorySize: 128
+  events:
+    - http:
+        method: get
+        path: translate
+  environment:
+    TRANSLATE_API_KEY: ${ssm:/burst-writing/translate/api-key~true}
