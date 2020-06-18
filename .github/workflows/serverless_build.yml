@@ -68,7 +68,7 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Install serverless cli
-      run: yarn global add serverless
+      run: yarn global add serverless && echo "::add-path::$(yarn global bin)"
 
     - name: serverless package
       run: serverless package -s prod
