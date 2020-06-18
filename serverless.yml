@@ -18,6 +18,7 @@ custom:
     httpPort: 4000
 
   localstack:
+    debug: true
     host: http://localhost:4566
     endpoints:
       # TODO: pull request for eliminating
@@ -25,7 +26,6 @@ custom:
       ssm: http://localhost:4566
     stages:
       - dev
-    autostart: true
     lambda:
       mountCode: true
 
