@@ -74,7 +74,7 @@ jobs:
       run: zip artifact.zip -r .serverless/* buildspec.yml
 
     - name: Upload artifact to S3
-        run: aws s3 sync artifact.zip s3://$AWS_S3_BUCKET
+      run: aws s3 sync artifact.zip s3://$AWS_S3_BUCKET
         env:
           AWS_S3_BUCKET: ${{ env.BUCKET_NAME }}-${{ env.REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
