@@ -71,13 +71,13 @@ jobs:
       run: yarn global add serverless && echo "::add-path::$(yarn global bin)"
 
     - name: serverless package
-      run: serverless package -s prod
+      run: serverless package -s prod --package artifacts
 
     - name: zip up artifact
-      run: zip artifact.zip -r .serverless/* buildspec.yml
+      run: zip build.zip -r artifacts buildspec.yml
 
     - name: Upload artifact to S3
-      run: aws s3 mv artifact.zip s3://$AWS_S3_BUCKET/
+      run: aws s3 mv build.zip s3://$AWS_S3_BUCKET/
       env:
         AWS_S3_BUCKET: ${{ env.BUCKET_NAME }}-${{ env.REGION }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
