@@ -7,7 +7,9 @@
     "test": "echo \"No tests specified\" && exit 0",
     "start": "docker-compose up -d && serverless offline",
     "provision": "./provision-localstack.sh",
-    "down": "docker-compose down"
+    "down": "docker-compose down",
+    "deploy:personal": "serverless deploy -s $(whoami)",
+    "destroy:personal": "serverless remove -s $(whoami)"
   },
   "dependencies": {
     "@google-cloud/translate": "^6.0.0",

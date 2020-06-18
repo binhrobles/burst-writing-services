@@ -48,3 +48,7 @@ package:
 
 functions:
   - ${file(./translate/functions.yml)}
+
+resources:
+  Resources:
+    ${file(./cfn/iam-roles.yml)}
