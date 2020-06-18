@@ -1,4 +1,5 @@
 /* use prompt-user as partition, createtime as sort */
+/* TODO: how could one search for all user's entries? GSI? switch hash key around? */
 resource "aws_dynamodb_table" "entries_table" {
   name = "Entries"
 
