@@ -51,5 +51,5 @@ functions:
   - ${file(./translate/functions.yml)}
 
 resources:
-  Resources:
-    ${file(./cfn/iam-roles.yml)}
+  - ${file(./resources/iam-roles.yml)}
+  - ${file(./resources/validation.yml)}

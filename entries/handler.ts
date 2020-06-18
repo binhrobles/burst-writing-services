@@ -1,21 +1,5 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
-import SSM from 'aws-sdk/clients/ssm';
-import axios from 'axios';
+import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
 import 'source-map-support/register';
-
-let TRANSLATE_API_KEY = '';
-const axiosClient = axios.create({
-  baseURL: 'https://translation.googleapis.com/language/translate/v2',
-});
-
-const getApiKey = async () => {
-  const ssm = new SSM();
-  const result = await ssm.getParameter({
-    Name: '/burst-writing/translate/api-key',
-    WithDecryption: true,
-  }).promise();
-  return result.Parameter.Value;
-}
 
 const handleError = (e: any) => {
   console.error(JSON.stringify(e, null, 2));
@@ -23,10 +7,6 @@ const handleError = (e: any) => {
 
 export const translate: APIGatewayProxyHandler = async (event, _context) => {
   try {
-    if (!TRANSLATE_API_KEY) {
-      TRANSLATE_API_KEY = await getApiKey();
-    }
-
     const target = event.multiValueQueryStringParameters.target[0];
     const text = event.multiValueQueryStringParameters.q[0];
 

@@ -2,8 +2,12 @@
 translate:
   handler: translate/handler.translate
   role: TranslateLambdaRole
-  memorySize: 128
   events:
     - http:
         method: get
         path: translate
+        request:
+          parameters:
+            querystrings:
+              target: true
+              q: true

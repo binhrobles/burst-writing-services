@@ -1,0 +1,16 @@
+---
+# Enables query param validation: https://github.com/serverless/serverless/issues/5035
+Resources:
+  ParameterRequestValidator:
+    Type: AWS::ApiGateway::RequestValidator
+    Properties:
+      Name: ParameterRequestValidator
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ValidateRequestBody: false
+      ValidateRequestParameters: true
+
+  ApiGatewayMethodTranslateGet:
+    Properties:
+      RequestValidatorId:
+        Ref: ParameterRequestValidator
