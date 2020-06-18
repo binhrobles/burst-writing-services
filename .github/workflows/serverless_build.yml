@@ -70,7 +70,7 @@ jobs:
     - name: serverless package
       uses: serverless/github-action@master
       with:
-        args: package
+        args: package -s prod
 
     - name: zip up artifact
       run: zip artifact.zip -r .serverless/* buildspec.yml
