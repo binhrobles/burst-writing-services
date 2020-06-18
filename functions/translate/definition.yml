@@ -1,6 +1,6 @@
 ---
 translate:
-  handler: translate/handler.translate
+  handler: functions/translate/handler.translate
   role: TranslateLambdaRole
   events:
     - http:

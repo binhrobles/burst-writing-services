@@ -1,11 +1,11 @@
-import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
+import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
 
-const handleError = (e: any) => {
+const handleError = (e: Error) => {
   console.error(JSON.stringify(e, null, 2));
-}
+};
 
-export const create: APIGatewayProxyHandler = async (event, _context) => {
+export const create: APIGatewayProxyHandler = async (event) => {
   try {
     const body = JSON.parse(event.body);
     return {
@@ -17,6 +17,6 @@ export const create: APIGatewayProxyHandler = async (event, _context) => {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: e.message }),
-    }
+    };
   }
-}
+};

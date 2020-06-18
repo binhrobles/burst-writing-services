@@ -10,18 +10,20 @@ const axiosClient = axios.create({
 
 const getApiKey = async () => {
   const ssm = new SSM();
-  const result = await ssm.getParameter({
-    Name: '/burst-writing/translate/api-key',
-    WithDecryption: true,
-  }).promise();
+  const result = await ssm
+    .getParameter({
+      Name: '/burst-writing/translate/api-key',
+      WithDecryption: true,
+    })
+    .promise();
   return result.Parameter.Value;
-}
+};
 
-const handleError = (e: any) => {
+const handleError = (e: Error) => {
   console.error(JSON.stringify(e, null, 2));
-}
+};
 
-export const translate: APIGatewayProxyHandler = async (event, _context) => {
+export const translate: APIGatewayProxyHandler = async (event) => {
   try {
     if (!TRANSLATE_API_KEY) {
       TRANSLATE_API_KEY = await getApiKey();
@@ -30,7 +32,9 @@ export const translate: APIGatewayProxyHandler = async (event, _context) => {
     const target = event.multiValueQueryStringParameters.target[0];
     const text = event.multiValueQueryStringParameters.q[0];
 
-    const response = await axiosClient.get(`?key=${TRANSLATE_API_KEY}&target=${target}&q=${text}`);
+    const response = await axiosClient.get(
+      `?key=${TRANSLATE_API_KEY}&target=${target}&q=${text}`
+    );
     return {
       statusCode: 200,
       body: JSON.stringify({
@@ -42,6 +46,6 @@ export const translate: APIGatewayProxyHandler = async (event, _context) => {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: e.message }),
-    }
+    };
   }
-}
+};

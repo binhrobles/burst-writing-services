@@ -1,6 +1,6 @@
 ---
 entries:
-  handler: entries/handler.create
+  handler: functions/entries/handler.create
   role: BasicRole
   events:
     - http:
@@ -8,4 +8,4 @@ entries:
         path: entry
         request:
           schema:
-            application/json: ${file(entries/models/EntryCreate.json)}
+            application/json: ${file(functions/entries/models/EntryCreate.json)}
