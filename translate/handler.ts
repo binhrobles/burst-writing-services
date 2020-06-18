@@ -27,17 +27,16 @@ const validateInput = (event: APIGatewayProxyEvent) => {
 }
 
 export const translate: APIGatewayProxyHandler = async (event, _context) => {
-  if (!TRANSLATE_API_KEY) {
-    TRANSLATE_API_KEY = await getApiKey();
-  }
-
-  // wrap in a try and return error
-  validateInput(event);
-
-  const target = event.multiValueQueryStringParameters.target[0];
-  const text = event.multiValueQueryStringParameters.q[0];
-
   try {
+    if (!TRANSLATE_API_KEY) {
+      TRANSLATE_API_KEY = await getApiKey();
+    }
+
+    validateInput(event);
+
+    const target = event.multiValueQueryStringParameters.target[0];
+    const text = event.multiValueQueryStringParameters.q[0];
+
     const response = await axiosClient.get(`?key=${TRANSLATE_API_KEY}&target=${target}&q=${text}`);
     return {
       statusCode: 200,
@@ -49,7 +48,7 @@ export const translate: APIGatewayProxyHandler = async (event, _context) => {
     handleError(e);
     return {
       statusCode: 500,
-      body: null,
+      body: JSON.stringify({ error: e.message }),
     }
   }
 }

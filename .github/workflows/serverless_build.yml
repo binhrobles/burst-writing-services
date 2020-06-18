@@ -67,10 +67,11 @@ jobs:
     - name: Install dependencies
       run: yarn --frozen-lockfile
 
+    - name: Install serverless cli
+      run: yarn global add serverless
+
     - name: serverless package
-      uses: serverless/github-action@master
-      with:
-        args: package -s prod
+      run: serverless package -s prod
 
     - name: zip up artifact
       run: zip artifact.zip -r .serverless/* buildspec.yml
