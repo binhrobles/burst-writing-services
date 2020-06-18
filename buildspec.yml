@@ -6,7 +6,8 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      - npm install -g serverless
+      - yarn global add serverless
+      - yarn  # install local dependencies, which sls needs for deploying, which I dislike
   build: 
     commands: 
       - serverless deploy --package artifacts --stage "$STAGE"
