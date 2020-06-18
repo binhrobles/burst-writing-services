@@ -1,23 +1,39 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
+import SSM from 'aws-sdk/clients/ssm';
 import axios from 'axios';
+import assert from 'assert';
 import 'source-map-support/register';
 
-const TRANSLATE_API_KEY = process.env.TRANSLATE_API_KEY;
-if (!TRANSLATE_API_KEY ||
-  TRANSLATE_API_KEY === undefined ||
-  TRANSLATE_API_KEY === 'undefined'
-) throw new Error('Missing API key');
-
+let TRANSLATE_API_KEY = '';
 const axiosClient = axios.create({
   baseURL: 'https://translation.googleapis.com/language/translate/v2',
 });
 
-function handleError(e: any) {
+const getApiKey = async () => {
+  const ssm = new SSM();
+  const result = await ssm.getParameter({
+    Name: '/burst-writing/translate/api-key',
+    WithDecryption: true,
+  }).promise();
+  return result.Parameter.Value;
+}
+
+const handleError = (e: any) => {
   console.error(JSON.stringify(e, null, 2));
 }
 
+const validateInput = (event: APIGatewayProxyEvent) => {
+  assert(event && event.multiValueQueryStringParameters && event.multiValueQueryStringParameters.target && event.multiValueQueryStringParameters.q, 'target and q query strings must be defined');
+}
+
 export const translate: APIGatewayProxyHandler = async (event, _context) => {
-  // TODO: input verification
+  if (!TRANSLATE_API_KEY) {
+    TRANSLATE_API_KEY = await getApiKey();
+  }
+
+  // wrap in a try and return error
+  validateInput(event);
+
   const target = event.multiValueQueryStringParameters.target[0];
   const text = event.multiValueQueryStringParameters.q[0];
 
