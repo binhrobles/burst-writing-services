@@ -10,9 +10,18 @@
 
 ### Locally
 
+- For local dev, testing, and quick feedback
 - `yarn start` should raise localstack docker container and start the API in offline mode
-- `./provision-localstack.sh` will PUT the API key needed for the translate API in the localstack SSM
+- `yarn provision` will PUT the API key needed for the translate API in the localstack SSM
   - TODO: preserve this in state
+- Lambdas are available behind `localhost:4000/dev`
+
+### Personal Stack
+
+- For testing with real/shared infrastructure, integration tests, pre-commit smoke test
+- `yarn deploy:personal` should deploy a personal stack using the machine's `whoami` value
+- Lambdas are available behind `burst-api.binhrobles.com/{whoami}`
+- Cleanup! `yarn destroy:personal`
 
 ### Deploying
 
@@ -23,15 +32,19 @@
 - Custom domain created with: `sls create_domain`
   - could've done this in terraform, but seems like serverless-custom-domain plugin expects some CFN outputs to be made available for the function deployments to work
 
-#### Handled by Github Action
+#### Handled by Deployment Pipeline
 
-- Create commit artifact w/ `sls package -s prod`
-- Uploads artifact to S3 bucket
+- Github Action
+  - Create commit artifact w/ `sls package -s prod`
+  - Uploads artifact to S3 bucket
 - Triggers a CodePipeline flow which kicks off deploys for the envs
 
+  - Source Stage watches S3 bucket location
+  - "Build" Stage uses CodeBuild to deploy artifact into this env
   - Wouldn't actually currently work, since `sls package` injects env-specific info at package time
+  - Moving away from using Code\* because free tier will expire soon and really not getting much out of it
 
-- `serverless-domain-manager` creates a path off the root domain to the deployed stage
+- `serverless-custom-domain` creates a path off the root domain to the deployed stage
 
 #### Post-Deploy Manual Steps
 
