@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
     "start": "docker-compose up -d && serverless offline",
-    "provision": "./provision-localstack.sh",
-    "down": "docker-compose down",
+    "provision": "cd infrastructure/local && terraform apply --auto-approve",
+    "stop": "docker-compose stop",
     "deploy:personal": "serverless deploy -s $(whoami)",
     "destroy:personal": "serverless remove -s $(whoami)"
   },

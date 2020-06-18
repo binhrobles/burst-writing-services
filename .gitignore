@@ -1,13 +1,17 @@
-# package directories
+# package
 node_modules
 jspm_packages
 
-# Serverless directories
+# Serverless
 .serverless
 
-# Webpack directories
+# Webpack
 .webpack
 .build
 
+# Terraform
+*.tfstate
+*.tfstate*
+.terraform
+
 .env
-artifact.zip
