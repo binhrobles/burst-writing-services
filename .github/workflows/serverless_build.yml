@@ -74,7 +74,7 @@ jobs:
       run: serverless package -s prod --package artifacts
 
     - name: zip up artifact
-      run: zip build.zip -r artifacts buildspec.yml
+      run: zip build.zip -r artifacts buildspec.yml serverless.yml
 
     - name: Upload artifact to S3
       run: aws s3 mv build.zip s3://$AWS_S3_BUCKET/
