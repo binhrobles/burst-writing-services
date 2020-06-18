@@ -5,17 +5,12 @@ const handleError = (e: any) => {
   console.error(JSON.stringify(e, null, 2));
 }
 
-export const translate: APIGatewayProxyHandler = async (event, _context) => {
+export const create: APIGatewayProxyHandler = async (event, _context) => {
   try {
-    const target = event.multiValueQueryStringParameters.target[0];
-    const text = event.multiValueQueryStringParameters.q[0];
-
-    const response = await axiosClient.get(`?key=${TRANSLATE_API_KEY}&target=${target}&q=${text}`);
+    const body = JSON.parse(event.body);
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        translation: response.data.data.translations[0].translatedText,
-      }),
+      body: JSON.stringify(body),
     };
   } catch (e) {
     handleError(e);

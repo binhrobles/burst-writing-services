@@ -1,6 +1,6 @@
 ---
 Resources:
-  DefaultRole:
+  BasicRole:
     Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:

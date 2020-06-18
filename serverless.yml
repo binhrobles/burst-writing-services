@@ -48,7 +48,8 @@ package:
   individually: true
 
 functions:
-  - ${file(./translate/functions.yml)}
+  - ${file(./translate/definition.yml)}
+  - ${file(./entries/definition.yml)}
 
 resources:
   - ${file(./resources/iam-roles.yml)}

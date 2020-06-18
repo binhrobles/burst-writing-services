@@ -1,0 +1,18 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "EntryCreate",
+  "required": ["user", "text", "prompt"],
+  "properties": {
+    "user": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "prompt": {
+      "type": "string"
+    }
+  }
+}

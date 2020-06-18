@@ -1,8 +1,0 @@
----
-entries:
-  handler: entries/handler.create
-  role: DefaultRole
-  events:
-    - http:
-        method: post
-        path: entry

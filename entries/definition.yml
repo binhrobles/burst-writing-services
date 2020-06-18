@@ -1,0 +1,11 @@
+---
+entries:
+  handler: entries/handler.create
+  role: BasicRole
+  events:
+    - http:
+        method: post
+        path: entry
+        request:
+          schema:
+            application/json: ${file(entries/models/EntryCreate.json)}
