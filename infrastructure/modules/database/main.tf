@@ -1,5 +1,8 @@
-/* use prompt-user as partition, createtime as sort */
-/* TODO: how could one search for all user's entries? GSI? switch hash key around? */
+/* uses user as partition, prompt_createtime as sort */
+/* should allow quick queries for user entries */
+/* at scale, with inconsistent user usage, this would hot spot */
+/* maintains key uniqueness via user-prompt-creationtime relationship */
+/* allows easy retrieval of previous entries of this prompt (useful?) */
 resource "aws_dynamodb_table" "entries_table" {
   name = "Entries"
 
@@ -8,16 +11,16 @@ resource "aws_dynamodb_table" "entries_table" {
   read_capacity  = 2
   write_capacity = 2
 
-  hash_key  = "Prompt_User"
-  range_key = "CreateTime"
+  hash_key  = "User"
+  range_key = "Prompt_CreateTime"
 
   attribute {
-    name = "Prompt_User"
+    name = "User"
     type = "S"
   }
 
   attribute {
-    name = "CreateTime"
+    name = "Prompt_CreateTime"
     type = "S"
   }
 }

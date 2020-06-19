@@ -19,10 +19,11 @@ async function PutEntry({
   wordbank: Array<string>;
 }): Promise<void> {
   // DDB item mapping
+  const now = Date.now();
   const Item = {
-    CreateTime: Date.now(),
+    CreateTime: now,
     Prompt: prompt,
-    Prompt_User: `${prompt}_${user}`,
+    Prompt_CreateTime: `${prompt}_${now}`,
     Text: text,
     User: user,
     WordBank: wordbank,
