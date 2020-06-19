@@ -1,9 +1,9 @@
 terraform {
   backend "remote" {
-    organization = "burst-writing"
+    organization = "binhrobles"
 
     workspaces {
-      name = "burst-writing-db"
+      name = "burst-writing"
     }
   }
 }
