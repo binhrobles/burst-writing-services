@@ -1,25 +1,45 @@
 import DynamoDB from 'aws-sdk/clients/dynamodb';
 
-const DDB = new DynamoDB();
+const config = process.env.IS_OFFLINE
+  ? {
+      endpoint: 'http://localhost:4566',
+    }
+  : {};
+const dynamo = new DynamoDB.DocumentClient(config);
 
-async function PutResourceToTable({
-  TableName,
-  Item,
+async function PutEntry({
+  prompt,
+  text,
+  user,
+  wordbank = null,
 }: {
-  TableName: string;
-  Item: Record<string, Record<string, string | number>>;
-}) {
-  const params = {
-    TableName,
-    Item,
+  prompt: string;
+  text: string;
+  user: string;
+  wordbank: Array<string>;
+}): Promise<void> {
+  // DDB item mapping
+  const Item = {
+    CreateTime: Date.now(),
+    Prompt: prompt,
+    Prompt_User: `${prompt}_${user}`,
+    Text: text,
+    User: user,
+    WordBank: wordbank,
   };
-  const result = await DDB.putItem(params).promise();
+
+  // put it, letting DocumentClient do the type mapping for us
+  const result = await dynamo
+    .put({
+      TableName: 'Entries',
+      Item,
+    })
+    .promise();
   console.log(JSON.stringify(result));
-  return;
 }
 
 const DBClient = {
-  PutResourceToTable,
+  PutEntry,
 };
 
 export default DBClient;

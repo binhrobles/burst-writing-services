@@ -10,30 +10,7 @@ const handleError = (e: Error) => {
 export const create: APIGatewayProxyHandler = async (event) => {
   try {
     const body = JSON.parse(event.body);
-    const Item = {
-      Prompt_User: {
-        S: `${body.prompt}_${body.user}`,
-      },
-      Prompt: {
-        S: body.prompt,
-      },
-      User: {
-        S: body.user,
-      },
-      Text: {
-        S: body.text,
-      },
-      CreateTime: {
-        N: Date.now(),
-      },
-    };
-    // TODO: ensure this is rendered properly
-    if (body.wordbank) {
-      Item['WordBank'] = {
-        SS: body.wordbank,
-      };
-    }
-    await DBClient.PutResourceToTable({ TableName: 'Entries', Item });
+    await DBClient.PutEntry(body);
 
     return {
       statusCode: 200,

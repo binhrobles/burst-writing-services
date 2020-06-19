@@ -5,8 +5,9 @@ service:
 
 custom:
   webpack:
-    webpackConfig: ./webpack.config.js
     includeModules: true
+    packager: 'yarn'
+    webpackConfig: ./webpack.config.js
 
   customDomain:
     domainName: burst-api.binhrobles.com
@@ -17,6 +18,7 @@ custom:
 
   serverless-offline:
     httpPort: 4000
+    useChildProcesses: true
 
   localstack:
     host: http://localhost:4566
@@ -24,6 +26,7 @@ custom:
       # TODO: pull request for eliminating
       # https://github.com/localstack/serverless-localstack/blob/master/src/index.js#L40
       ssm: http://localhost:4566
+      dynamodb: http://localhost:4566
     stages:
       - dev
     lambda:
@@ -31,9 +34,9 @@ custom:
 
 plugins:
   - serverless-webpack
-  - serverless-offline
   - serverless-localstack
   - serverless-domain-manager
+  - serverless-offline
 
 provider:
   name: aws
