@@ -32,3 +32,31 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AWSLambdaExecute
         - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
+
+  EntriesLambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /burst-api/
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
+      Policies:
+        - PolicyName: 'AllowEntriesTableAccess'
+          PolicyDocument: 
+            Version: '2012-10-17'
+            Statement: 
+              - Effect: 'Allow'
+                Action:
+                  - 'dynamodb:Get*'
+                  - 'dynamodb:Delete*'
+                  - 'dynamodb:Update*'
+                  - 'dynamodb:Put*'
+                Resource: 'arn:aws:dynamodb:*:*:table/Entries'

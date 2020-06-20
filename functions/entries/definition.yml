@@ -1,11 +1,22 @@
 ---
-entries:
-  handler: functions/entries/handler.create
-  role: BasicRole
+CreateEntry:
+  handler: functions/entries/handler.CreateEntry
+  role: EntriesLambdaRole
   events:
     - http:
         method: post
         path: entry
         request:
           schema:
-            application/json: ${file(functions/entries/models/EntryCreate.json)}
+            application/json: ${file(functions/entries/models/CreateEntry.json)}
+
+GetUserEntries:
+  handler: functions/entries/handler.GetUserEntries
+  role: EntriesLambdaRole
+  events:
+    - http:
+        method: get
+        path: entries
+        request:
+          schema:
+            application/json: ${file(functions/entries/models/GetUserEntries.json)}

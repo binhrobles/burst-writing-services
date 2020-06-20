@@ -1,0 +1,12 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "GetUserEntries",
+  "required": ["user"],
+  "properties": {
+    "user": {
+      "type": "string"
+    }
+  }
+}

@@ -7,7 +7,7 @@ const config = process.env.IS_OFFLINE
   : {};
 const dynamo = new DynamoDB.DocumentClient(config);
 
-async function PutEntry({
+async function CreateEntry({
   prompt,
   text,
   user,
@@ -36,11 +36,24 @@ async function PutEntry({
       Item,
     })
     .promise();
-  console.log(JSON.stringify(result));
+  console.log(JSON.stringify(result.ConsumedCapacity));
+}
+
+async function GetUserEntries({ user }: { user: string }): Promise<Array<any>> {
+  const result = await dynamo
+    .query({
+      TableName: 'Entries',
+      KeyConditionExpression: `partitionKeyName = ${user}`,
+    })
+    .promise();
+  console.log(JSON.stringify(result.ConsumedCapacity));
+
+  return result.Items;
 }
 
 const DBClient = {
-  PutEntry,
+  CreateEntry,
+  GetUserEntries,
 };
 
 export default DBClient;
