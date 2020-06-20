@@ -40,10 +40,20 @@ async function CreateEntry({
 }
 
 async function GetUserEntries({ user }: { user: string }): Promise<Array<any>> {
+  // only requests fields:
+  const projection = 'Prompt, WordBank, CreateTime';
   const result = await dynamo
     .query({
       TableName: 'Entries',
-      KeyConditionExpression: `partitionKeyName = ${user}`,
+      ExpressionAttributeNames: {
+        // because `User` is a DDB reserved word
+        '#user': 'User',
+      },
+      ExpressionAttributeValues: {
+        ':user': user,
+      },
+      KeyConditionExpression: '#user = :user',
+      ProjectionExpression: projection,
     })
     .promise();
   console.log(JSON.stringify(result.ConsumedCapacity));

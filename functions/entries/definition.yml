@@ -5,10 +5,13 @@ CreateEntry:
   events:
     - http:
         method: post
-        path: entry
+        path: user/{user}/entry
         request:
           schema:
             application/json: ${file(functions/entries/models/CreateEntry.json)}
+          parameters:
+            paths:
+              user: true
 
 GetUserEntries:
   handler: functions/entries/handler.GetUserEntries
@@ -16,7 +19,8 @@ GetUserEntries:
   events:
     - http:
         method: get
-        path: entries
+        path: user/{user}/entries
         request:
-          schema:
-            application/json: ${file(functions/entries/models/GetUserEntries.json)}
+          parameters:
+            paths:
+              user: true

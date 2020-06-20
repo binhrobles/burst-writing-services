@@ -3,11 +3,8 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "title": "CreateEntry",
-  "required": ["user", "text", "prompt"],
+  "required": ["text", "prompt"],
   "properties": {
-    "user": {
-      "type": "string"
-    },
     "text": {
       "type": "string"
     },

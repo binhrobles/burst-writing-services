@@ -6,11 +6,13 @@ const handleError = (e: Error) => {
   console.error(JSON.stringify(e, null, 2));
 };
 
-// TODO: rip userId from OAuth creds
 export const CreateEntry: APIGatewayProxyHandler = async (event) => {
   try {
-    const body = JSON.parse(event.body);
-    await DBClient.CreateEntry(body);
+    const entry = JSON.parse(event.body);
+    await DBClient.CreateEntry({
+      ...entry,
+      user: event.pathParameters.user,
+    });
 
     return {
       statusCode: 200,
@@ -27,10 +29,9 @@ export const CreateEntry: APIGatewayProxyHandler = async (event) => {
 
 export const GetUserEntries: APIGatewayProxyHandler = async (event) => {
   try {
-    // TODO: this won't work since GET requests don't have bodies
-    //       need to have a user token
-    const body = JSON.parse(event.body);
-    const entries = await DBClient.GetUserEntries(body);
+    const entries = await DBClient.GetUserEntries({
+      user: event.pathParameters.user,
+    });
 
     return {
       statusCode: 200,
