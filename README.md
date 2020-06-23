@@ -1,10 +1,11 @@
 # burst-writing-services
 
+DynamoDB CRUD interface for Burst Writer user entries. Google translate proxy. 
+
 ## Stack
 
 - [Serverless](https://www.serverless.com/) for API Gateway and function creation
 - [LocalStack](https://github.com/localstack/localstack) for local AWS service mocking
-- Non-serverless specific infra being created [here](https://github.com/binhrobles-burst-writing/burst-writing-shared-infra)
 
 ## Usage
 
